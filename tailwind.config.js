@@ -14,5 +14,19 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+
+  rippleui: {
+    themes: [
+      {
+        themeName: 'light',
+        colorScheme: 'light',
+        colors: {
+          // ... otros colores
+          backgroundPrimary: '#ffffff', // Establece el color de fondo a blanco
+        },
+      },
+    ],
+  },
+  plugins: [require("rippleui")],
+
 };
