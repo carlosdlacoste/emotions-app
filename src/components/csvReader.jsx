@@ -21,8 +21,10 @@ const CSVReader = () => {
 
     return (
         <>
-            <input className='text-black' type="file" accept=".csv" onChange={(event) => handleFileChange(event)} />
-            {/* Renderizar los datos del CSV aquí si es necesario */}
+            <div className='flex justify-center mt-4 p-2'>
+
+                <input className='text-black' type="file" accept=".csv" onChange={(event) => handleFileChange(event)} />
+            </div>
             <EmotionAnalysis data={data}/>
         </>
     );

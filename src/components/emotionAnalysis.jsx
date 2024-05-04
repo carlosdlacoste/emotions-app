@@ -46,7 +46,7 @@ const EmotionAnalysis = ({data}) => {
 
     return(
         <>
-            <div className="flex h-screen flex-col justify-center items-center px-6 py-12 lg:px-8">
+            <div className="flex h-screen flex-col px-6 py-12 lg:px-8">
 
                 <div className="flex w-full overflow-x-auto border-solid border-2 border-black">
                     <table className="table">
