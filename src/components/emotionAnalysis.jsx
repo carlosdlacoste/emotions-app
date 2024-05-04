@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 const EmotionAnalysis = ({data}) => {
 
     const [modelResult, setModelResult] = useState([])
+    const [maxLabel, setMaxLabel] = useState("")
 
     useEffect(() => {
 
@@ -21,7 +22,10 @@ const EmotionAnalysis = ({data}) => {
                             }),
                         })
                         .then(resp => resp.json())
-                        .then(result => console.log(result))
+                        .then(result => {
+                            console.log(result)
+                            setModelResult(result)
+                        })
                     });
                     // return result
                 } catch (error) {
@@ -30,6 +34,14 @@ const EmotionAnalysis = ({data}) => {
         }
         apiRequest()
     }, [data]);
+
+    useEffect(() => {
+        if(modelResult.length > 0){
+            const maxObjeto = modelResult.reduce((max, item) => item.score > max.score ? item : max, modelResult[0])
+            setMaxLabel(maxObjeto.label)
+        }
+    }, [modelResult])
+
 
 
     return(
@@ -46,7 +58,7 @@ const EmotionAnalysis = ({data}) => {
                                 <th>Reactions Count</th>
                                 <th>Shares</th>
                                 <th>Text</th>
-                                {/* <th>Model Result</th> */}
+                                <th>Model Result</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -58,7 +70,7 @@ const EmotionAnalysis = ({data}) => {
                                     <td>{item["reactions_count;;;"]}</td>
                                     <td>{item.shares}</td>
                                     <td>{item.text}</td>
-
+                                    <td>{maxLabel}</td>
                                 </tr>
                             ))}
                         </tbody>
