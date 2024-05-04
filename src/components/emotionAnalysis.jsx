@@ -1,7 +1,37 @@
 "use client"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const EmotionAnalysis = ({data}) => {
+
+    const [modelResult, setModelResult] = useState([])
+
+    useEffect(() => {
+
+        const apiRequest = async () => {
+
+                try {
+                    data.forEach(element => {
+                        fetch("https://api-inference.huggingface.co/models/finiteautomata/beto-sentiment-analysis", {
+                            method: "POST",
+                            headers: {
+                                "Authorization": "Bearer " + "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"
+                            },
+                            body: JSON.stringify({
+                                "text": element.text
+                            }),
+                        })
+                        .then(resp => resp.json())
+                        .then(result => console.log(result))
+                    });
+                    // return result
+                } catch (error) {
+                    console.log(error)
+                }
+        }
+        apiRequest()
+    }, [data]);
+
+
     return(
         <>
             <div className="flex h-screen flex-col justify-center items-center px-6 py-12 lg:px-8">
@@ -16,6 +46,7 @@ const EmotionAnalysis = ({data}) => {
                                 <th>Reactions Count</th>
                                 <th>Shares</th>
                                 <th>Text</th>
+                                {/* <th>Model Result</th> */}
                             </tr>
                         </thead>
                         <tbody>
@@ -27,6 +58,7 @@ const EmotionAnalysis = ({data}) => {
                                     <td>{item["reactions_count;;;"]}</td>
                                     <td>{item.shares}</td>
                                     <td>{item.text}</td>
+
                                 </tr>
                             ))}
                         </tbody>
