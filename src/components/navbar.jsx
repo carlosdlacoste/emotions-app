@@ -6,33 +6,33 @@ import { useRouter } from "next/navigation";
 const NavBar = ({storedToken, handleToken}) => {
     const router = useRouter()
 
-    // useEffect(() => {
-    //     const currentToken = sessionStorage.getItem('MiToken')
-    //         handleToken(currentToken)
-    // }, [storedToken]);
+    useEffect(() => {
+        const currentToken = sessionStorage.getItem('MiToken')
+            handleToken(currentToken)
+    }, [storedToken]);
 
-    // const deleteTokenSessionStorage = (token) => {
-    //     sessionStorage.removeItem('MiToken', token);
-    // };
+    const deleteTokenSessionStorage = (token) => {
+        sessionStorage.removeItem('MiToken', token);
+    };
 
-    // async function handleLogOut (event) {
-    //     event.preventDefault()
-    //     const resp = await fetch(import.meta.env.VITE_BACKEND_URL + "/api/logout", {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "Authorization": "Bearer " + storedToken
-    //         },
-    //     })
-    //     const data = await resp.json()
-    //     if(data){
+    async function handleLogOut (event) {
+        event.preventDefault()
+        const resp = await fetch("/api/logout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + storedToken
+            },
+        })
+        const data = await resp.json()
+        if(data){
 
-    //         console.log(data)
-    //         deleteTokenSessionStorage(storedToken)
-    //         handleToken(null)
-    //         router.push('/')
-    //     }
-    // }
+            console.log(data)
+            deleteTokenSessionStorage(storedToken)
+            handleToken(null)
+            router.push('/')
+        }
+    }
 
     return(
         <>

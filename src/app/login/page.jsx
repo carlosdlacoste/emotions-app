@@ -14,7 +14,7 @@ const Login = () =>{
 
     async function handleLogIn (event, findEmail, findPassword) {
         event.preventDefault()
-        const resp = await fetch("/api/login", {
+        const resp = await fetch("/api/auth", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
