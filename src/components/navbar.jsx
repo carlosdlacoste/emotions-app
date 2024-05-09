@@ -1,15 +1,17 @@
 "use client"
-import { useEffect} from "react";
+import { useEffect, useContext} from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { AuthContext } from "@/context/appContext";
 
-const NavBar = ({storedToken, handleToken}) => {
+const NavBar = () => {
     const router = useRouter()
+    const { token, updateToken } = useContext(AuthContext);
 
     useEffect(() => {
         const currentToken = sessionStorage.getItem('MiToken')
-            handleToken(currentToken)
-    }, [storedToken]);
+            updateToken(currentToken)
+    }, [token]);
 
     const deleteTokenSessionStorage = (token) => {
         sessionStorage.removeItem('MiToken', token);
@@ -17,21 +19,9 @@ const NavBar = ({storedToken, handleToken}) => {
 
     async function handleLogOut (event) {
         event.preventDefault()
-        const resp = await fetch("/api/logout", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + storedToken
-            },
-        })
-        const data = await resp.json()
-        if(data){
-
-            console.log(data)
-            deleteTokenSessionStorage(storedToken)
-            handleToken(null)
-            router.push('/')
-        }
+        deleteTokenSessionStorage(token)
+        updateToken(null)
+        router.push('/')
     }
 
     return(
@@ -44,7 +34,7 @@ const NavBar = ({storedToken, handleToken}) => {
                 </div>
                 <div className="navbar-end gap-x-3">
                 {
-                    !storedToken ?
+                    !token ?
                     <>
                             <Link href="/login">
                                 <button className="btn bg-emerald-500">Log In</button>

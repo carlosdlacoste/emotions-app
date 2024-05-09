@@ -1,29 +1,17 @@
 "use client"
 import CSVReader from "@/components/csvReader";
-import { useEffect } from "react";
+import { useEffect, useContext} from "react";
+import { AuthContext } from "@/context/appContext";
 
-export default function Home({token, handleTokenChange}) {
-
-//   useEffect(() => {
-//     const currentToken = sessionStorage.getItem('MiToken')
-//         handleTokenChange(currentToken)
-// }, [token]);
-
-console.log(token); // Para depuración, verifica que el token se reciba correctamente
-  console.log(handleTokenChange); // Para depuración, verifica que handleTokenChange sea una función
-
-  // Intenta llamar a handleTokenChange aquí para ver si el error persiste
-  if (typeof handleTokenChange === 'function') {
-    handleTokenChange('test'); // Llamada de prueba
-  }
+export default function Home() {
+  const { token, updateToken } = useContext(AuthContext);
 
   useEffect(() => {
-    const currentToken = sessionStorage.getItem('MiToken');
-    if (typeof handleTokenChange === 'function') {
-      handleTokenChange(currentToken);
-      console.log(typeof handleTokenChange)
-    }
-  }, [handleTokenChange]);
+    const currentToken = sessionStorage.getItem('MiToken')
+        updateToken(currentToken)
+}, [token]);
+
+
 
   return (
       <>
